@@ -1,0 +1,77 @@
+module cla8bit(
+    input [7:0] A,        // 8-bit input A
+    input [7:0] B,        // 8-bit input B
+    input Cin,            // Carry input
+    output [7:0] Sum,     // 8-bit sum
+    output Cout           // Carry output
+);
+
+// Internal signals
+wire [7:0] G, P;      // Generate and Propagate signals
+wire [7:0] C;         // Carry signals
+
+// Generate and Propagate for each bit
+assign G = A & B;             // Generate = A AND B
+assign P = A ^ B;             // Propagate = A XOR B
+
+// Carry Look-Ahead Logic
+assign C[0] = Cin;            // Initial carry is the input carry (Cin)
+assign C[1] = G[0] | (P[0] & C[0]);
+assign C[2] = G[1] | (P[1] & C[1]);
+assign C[3] = G[2] | (P[2] & C[2]);
+assign C[4] = G[3] | (P[3] & C[3]);
+assign C[5] = G[4] | (P[4] & C[4]);
+assign C[6] = G[5] | (P[5] & C[5]);
+assign C[7] = G[6] | (P[6] & C[6]);
+
+// Final Carry Output
+assign Cout = G[7] | (P[7] & C[7]);
+
+// Sum Calculation (Sum = A XOR B XOR Carry)
+assign Sum = P ^ C[7:0];      // Sum = P XOR carry
+
+endmodule
+
+//tb
+
+module cla8bit_tb;
+
+// Declare variables for the inputs and outputs of the CLA_8bit module
+reg [7:0] A, B;        // 8-bit inputs A and B
+reg Cin;               // Carry input
+wire [7:0] Sum;        // 8-bit Sum output
+wire Cout;             // Carry output
+
+// Instantiate the CLA_8bit module
+cla8bit uut (
+    .A(A),
+    .B(B),
+    .Cin(Cin),
+    .Sum(Sum),
+    .Cout(Cout)
+);
+
+initial begin
+    
+    
+
+    // Test Case 1: A = 8'b00011001, B = 8'b00101101, Cin = 0
+    A = 8'b00011001; B = 8'b00101101; Cin = 0;
+    #10; // Wait for 10 time units
+   
+
+    // Test Case 2: A = 8'b11110000, B = 8'b00001111, Cin = 1
+    A = 8'b11110000; B = 8'b00001111; Cin = 1;
+    #10; // Wait for 10 time units
+   
+
+    // Test Case 3: A = 8'b01010101, B = 8'b10101010, Cin = 0
+    A = 8'b01010101; B = 8'b10101010; Cin = 0;
+    #10; // Wait for 10 time units
+    
+
+    // Test Case 4: A = 8'b11111111, B = 8'b11111111, Cin = 1
+    A = 8'b11111111; B = 8'b11111111; Cin = 1;
+    #10; // Wait for 10 time units
+end endmodule  
+
