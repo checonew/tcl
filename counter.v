@@ -57,3 +57,18 @@ module counter_tb;
         $monitor("Time=%0t clk=%b rst=%b count=%b", $time, clk, rst, count);
     end
 endmodule
+
+
+Steps to be followed:
+Invoke conformal Equivalence checking Tool
+Lec –lpgxl –nogui
+SETUP> read design ./cla8bit.v –golden
+SETUP> read design ./cla_netlist.v –revised
+SETUP> read library ./lib/slow.lib -liberty
+ Set system mode lec
+ Add compared points –all
+ Compare
+ Report verification
+ Tclmode
+report_unmapped_points
+>set_gui
