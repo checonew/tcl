@@ -1,0 +1,3 @@
+//commands
+writ_sdc > lfsr.sdc
+write_sdf -timescale ns -nonegchecks -recrem split -edges check_edge -setup hold split  > lfsrdelay.sdf
