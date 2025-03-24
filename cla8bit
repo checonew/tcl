@@ -75,3 +75,16 @@ initial begin
     #10; // Wait for 10 time units
 end endmodule  
 
+
+Steps to be followed:
+Invoke conformal Equivalence checking Tool
+Lec –lpgxl –nogui
+SETUP> read design (enter path for Verilog code) –golden
+SETUP> read design (enter path for Netlist file) –revised
+SETUP> read library (enter path for .lib file) -liberty
+ Set system mode lec
+ Add compared points –all
+ Compare
+ Report verification
+ Tclmode
+
