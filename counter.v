@@ -70,5 +70,4 @@ SETUP> read library ./lib/slow.lib -liberty
  Compare
  Report verification
  Tclmode
-report_unmapped_points
->set_gui
+report_unmapped_points > set_gui
