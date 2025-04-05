@@ -1,0 +1,25 @@
+Set_db lib_search_path {./lib}
+Set_db hdl_search_path {./}
+Set_db library {./lib/slow.lib}
+read_hdl multiplier.v
+elaborate
+read_sdc {./constraint.sdc}
+syn_gen
+syn_map
+syn_opt
+write_hdl > multiplier_netlist.v
+Report_power
+Report_timing
+Report_area
+
+Lec –lpgxl –nogui
+SETUP> read design (enter path for Verilog code) –golden
+SETUP> read design (enter path for Netlist file) –revised
+SETUP> read library (enter path for .lib file) -liberty
+Set system mode lec
+Add compared points –all
+Compare
+Report verification
+Tclmode
+TCLMODE> report_unmapped_points
+ >set_gui
